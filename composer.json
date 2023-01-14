@@ -1,0 +1,16 @@
+{
+    "name": "elishaukpong/service-container",
+    "description": "service container",
+    "autoload": {
+        "psr-4": {
+            "ServiceContainer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Elisha Ukpong",
+            "email": "ishukpong418@gmail.com"
+        }
+    ],
+    "require": {}
+}
