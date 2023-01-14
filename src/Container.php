@@ -9,7 +9,7 @@ class Container
 
     public function bind(string $abstractClass, callable $concreteClass)
     {
-        return self::$boundedClasses[$abstractClass] = $concreteClass($this);
+        return self::$boundedClasses[$abstractClass] = $concreteClass;
     }
 
     public function singleton(string $abstractClass, callable $concreteClass)
@@ -19,8 +19,14 @@ class Container
 
     public function make(string $concreteClassDefinition)
     {
-        $class = self::$boundedClasses[$concreteClassDefinition] ?? self::$singletonClasses[$concreteClassDefinition];
+        if(isset($concreteClassDefinition, self::$boundedClasses)) {
+            return self::$boundedClasses[$concreteClassDefinition]($this);
+        }
 
-        return $class ?: throw new \RuntimeException('Container is not aware of requested class');
+        if(isset($concreteClassDefinition, self::$singletonClasses)) {
+            return self::$boundedClasses[$concreteClassDefinition];
+        }
+
+        return throw new \RuntimeException('Container is not aware of requested class');
     }
 }
